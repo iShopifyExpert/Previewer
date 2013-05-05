@@ -1,0 +1,104 @@
+<style type="text/css">
+	.displayBox {width:250px; height:335px; position:absolute; border:thin solid #dedede; padding:20px; margin-top:25px;}
+	.clear {width:100%: height:0; clear:both;}
+{% comment %} Initial Assignments {% endcomment %}
+
+{% assign opt1 = "" %}{% assign opt1p = "" %}
+{% assign opt2 = "" %}{% assign opt2p = "" %}
+{% assign opt3 = "" %}{% assign opt3p = "" %}
+{% assign opt4 = "" %}{% assign opt4p = "" %}
+{% assign opt5 = "" %}{% assign opt5p = "" %}
+{% assign opt6 = "" %}{% assign opt6p = "" %}
+
+{% for image in product.images %}
+{% unless image.alt == 'featured' %}
+	
+	{% assign handle = image.src | remove:'products/' | remove:'.png' %}
+	{% assign prefix = handle | split:'_' %}
+	
+	{% assign compoundCheck = "false" %}
+	{% if handle contains '-' %}
+		{% assign compoundTest = handle | remove_first:'-' %}
+		{% if compoundTest contains '-' %}
+			{% assign compoundCheck = "true" %}
+		{% endif %}
+	{% endif %}
+
+	{% if compoundCheck == "true" %}
+		{% assign prefix = prefix[0] | split:'-' %}
+		{% assign prefix = prefix[0] %}
+		
+		{% assign parent = handle | split:'_' %}
+		{% assign parent = parent[0] | split:'-' %}
+		{% assign parent = parent[1] %}
+		
+		{% assign child = handle | split:'-' %}
+		{% assign child = child[2] | split:'_' %}
+		{% assign child = child[0] %}
+		
+	{% else %}
+		{% assign prefix = prefix[0] %}
+	{% endif %}
+
+	{% if opt1 == "" %}
+		{% unless oldPrefixes contains prefix %}
+			{% assign opt1 = prefix %}
+			{% capture oldPrefixes %}{{ oldPrefixes }}{{ prefix }}{% endcapture %}
+			{% if compoundCheck == "true" %}
+				{% assign opt1p = parent %}
+				{% assign opt1c = child %}
+			{% endif %}
+		{% endunless %}
+	{% endif %}
+	{% if opt2 == "" %}
+		{% unless oldPrefixes contains prefix %}
+			{% assign opt2 = prefix %}
+			{% capture oldPrefixes %}{{ oldPrefixes }}{{ prefix }}{% endcapture %}
+			{% if compoundCheck == "true" %}
+				{% assign opt2p = parent %}
+				{% assign opt2c = child %}
+			{% endif %}
+		{% endunless %}
+	{% endif %}
+	{% if opt3 == "" %}
+		{% unless oldPrefixes contains prefix %}
+			{% assign opt3 = prefix %}
+			{% capture oldPrefixes %}{{ oldPrefixes }}{{ prefix }}{% endcapture %}
+			{% if compoundCheck == "true" %}
+				{% assign opt3p = parent %}
+				{% assign opt3c = child %}
+			{% endif %}
+		{% endunless %}
+	{% endif %}
+	{% if opt4 == "" %}
+		{% unless oldPrefixes contains prefix %}
+			{% assign opt4 = prefix %}
+			{% capture oldPrefixes %}{{ oldPrefixes }}{{ prefix }}{% endcapture %}
+			{% if compoundCheck == "true" %}
+				{% assign opt4p = parent %}
+				{% assign opt4c = child %}
+			{% endif %}
+		{% endunless %}
+	{% endif %}
+	{% if opt5 == "" %}
+		{% unless oldPrefixes contains prefix %}
+			{% assign opt5 = prefix %}
+			{% capture oldPrefixes %}{{ oldPrefixes }}{{ prefix }}{% endcapture %}
+			{% if compoundCheck == "true" %}
+				{% assign opt5p = parent %}
+				{% assign opt5c = child %}
+			{% endif %}
+		{% endunless %}
+	{% endif %}
+	{% if opt6 == "" %}
+		{% unless oldPrefixes contains prefix %}
+			{% assign opt6 = prefix %}
+			{% capture oldPrefixes %}{{ oldPrefixes }}{{ prefix }}{% endcapture %}
+			{% if compoundCheck == "true" %}
+				{% assign opt6p = parent %}
+				{% assign opt6c = child %}
+			{% endif %}
+		{% endunless %}
+	{% endif %}	
+{% endunless %}
+{% endfor %}

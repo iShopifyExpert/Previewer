@@ -1,0 +1,377 @@
+<!-- One -->
+{% if opt1p != '' %}
+<input type="hidden" name="option_one" id="option_one" value="" />
+<input type="hidden" name="option_one_b" id="option_one_b" value="" />
+	<div class="optionDropdown">
+		{{ opt1 | replace:'-',' ' }} {{ opt1p }}:
+		<select name="opt1p" onchange="show('one',this.value),parentPick('child1',this.value,'hidden1');">
+			<option value="" disabled="disabled" selected="selected">Select {{ opt1 }} {{ opt1p }}</option>
+			{% for image in product.images %}
+				{% assign image_src = image.src | remove:'products/' | remove:'.png' %}
+				{% if image_src contains opt1 %}
+					{% assign parent1 = image_src | split:'-' %}
+					{% assign parent1 = parent1[1] | remove: opt1 | remove: opt1p | remove_first: '_' | remove_last:'_' %}
+					{% assign parent_clean1 = parent1 | replace: '_',' ' %}
+					{% unless alreadyUsed1 contains parent1 %}
+						{% assign parentCount1 = parentCount1 | plus: 1 %}
+						<option value="{{ parentCount1 }}*{{ image_src }}">{{ parent_clean1 }}</option>
+						{% capture alreadyUsed1 %}{{ alreadyUsed1 }}{{ parent1 }}{% endcapture %}
+						{% capture parent_array1 %}{{ parent_array1 }}*parent1{{ parentCount1 }}_{{ parent1 }}{% endcapture %}
+					{% endunless %}
+				{% endif %}
+			{% endfor %}
+		</select>
+		<input type="hidden" value="{{ parentCount1 | plus: 1 }}" id="hidden1" />
+	</div>
+	{% for i in (1..parentCount1) %}
+		{% assign parent1 = parent_array1 | split: "*" %}
+		{% assign parent1 = parent1[i] | split: "_" %}
+		{% assign parent1 = parent1[1] %}
+		<div id="child1{{ i }}" class="optionDropdown{% if i > 1 %} hide{% endif %}">
+			{{ opt1 | replace:'-',' ' }} {{ opt1c }}:
+			<select name="properties[Option 1]" id="option1a" onchange="show('one',this.value), establish_validate_value('one',this.value);">
+				<option value="" disabled="disabled" selected="selected">Select {{ opt1 }} {{ opt1c }}</option>
+				{% for image in product.images %}
+					{% assign image_src = image.src | remove:'products/' | remove:'.png' %}
+					{% if image_src contains opt1 and image_src contains parent1 and image_src contains opt1c  %}
+						{% assign child1 = image_src | split: opt1c %}
+						{% assign child1 = child1[1] | remove_first:'_' | replace:'_',' ' %}
+						<option value="{{ image_src }}">{{ child1 | remove:'1' | remove:'2' | remove:'3' | remove:'4' | remove:'5' | remove:'6' | remove:'7' | remove:'8' | remove:'9' | remove:'0' }}</option>
+					{% endif %}
+				{% endfor %}
+			</select>
+		</div>
+	{% endfor %}
+{% else %}
+	{% if opt1 != '' %}
+		<input type="hidden" name="option_one" id="option_one" value="" />
+		<div class="optionDropdown">
+			{{ opt1 | replace:'-',' ' }}:
+			<select name="properties[Option 1]" id="option1b" onchange="show('one',this.value);">
+				<option value="" disabled="disabled" selected="selected">Select {{ opt1 | replace:'-',' ' }}</option>
+				{% for image in product.images %}
+					{% assign image_src = image.src | remove:'products/' | remove:'.png' %}
+					{% if image_src contains opt1 %}
+						{% capture remove1 %}{{ opt1 }}_{% endcapture %}
+						<option value="{{ image_src }}">{{ image_src | remove:remove1 | replace:'_',' ' | remove:'1' | remove:'2' | remove:'3' | remove:'4' | remove:'5' | remove:'6' | remove:'7' | remove:'8' | remove:'9' | remove:'0' }}</option>
+					{% endif %}
+				{% endfor %}
+			</select>
+		</div>
+	{% endif %}
+{% endif %}
+
+<!-- Two -->
+{% if opt2p != '' %}
+<input type="hidden" name="option_two" id="option_two" value="" />
+<input type="hidden" name="option_two_b" id="option_two_b" value="" />
+	<div class="optionDropdown">
+		{{ opt2 | replace:'-',' ' }} {{ opt2p }}:
+		<select name="opt2p" onchange="show('two',this.value),parentPick('child2',this.value,'hidden2');">
+			<option value="" disabled="disabled" selected="selected">Select {{ opt2 }} {{ opt2p }}</option>
+			{% for image in product.images %}
+				{% assign image_src = image.src | remove:'products/' | remove:'.png' %}
+				{% if image_src contains opt2 %}
+					{% assign parent2 = image_src | split:'-' %}
+					{% assign parent2 = parent2[1] | remove: opt2 | remove: opt2p | remove_first: '_' | remove_last:'_' %}
+					{% assign parent_clean2 = parent2 | replace: '_',' ' %}
+					{% unless alreadyUsed2 contains parent2 %}
+						{% assign parentCount2 = parentCount2 | plus: 1 %}
+						<option value="{{ parentCount2 }}*{{ image_src }}">{{ parent_clean2 }}</option>
+						{% capture alreadyUsed2 %}{{ alreadyUsed2 }}{{ parent2 }}{% endcapture %}
+						{% capture parent_array2 %}{{ parent_array2 }}*parent2{{ parentCount2 }}_{{ parent2 }}{% endcapture %}
+					{% endunless %}
+				{% endif %}
+			{% endfor %}
+		</select>
+		<input type="hidden" value="{{ parentCount2 | plus: 1 }}" id="hidden2" />
+	</div>
+	{% for i in (1..parentCount2) %}
+		{% assign parent2 = parent_array2 | split: "*" %}
+		{% assign parent2 = parent2[i] | split: "_" %}
+		{% assign parent2 = parent2[1] %}
+		<div id="child2{{ i }}" class="optionDropdown{% if i > 1 %} hide{% endif %}">
+			{{ opt2 | replace:'-',' ' }} {{ opt2c }}:
+			<select name="properties[Option 2]" id="option2a" onchange="show('two',this.value), establish_validate_value('two',this.value);">
+				<option value="" disabled="disabled" selected="selected">Select {{ opt2 }} {{ opt2c }}</option>
+				{% for image in product.images %}
+					{% assign image_src = image.src | remove:'products/' | remove:'.png' %}
+					{% if image_src contains opt2 and image_src contains parent2 and image_src contains opt2c  %}
+						{% assign child2 = image_src | split: opt2c %}
+						{% assign child2 = child2[1] | remove_first:'_' | replace:'_',' ' %}
+						<option value="{{ image_src }}">{{ child2 | remove:'1' | remove:'2' | remove:'3' | remove:'4' | remove:'5' | remove:'6' | remove:'7' | remove:'8' | remove:'9' | remove:'0' }}</option>
+					{% endif %}
+				{% endfor %}
+			</select>
+		</div>
+	{% endfor %}
+{% else %}
+	{% if opt2 != '' %}
+	<input type="hidden" name="option_two" id="option_two" value="" />
+		<div class="optionDropdown">
+			{{ opt2 | replace:'-',' ' }}:
+			<select name="properties[Option 2]" id="option2b" onchange="show('two',this.value);">
+				<option value="" disabled="disabled" selected="selected">Select {{ opt2 | replace:'-',' ' }}</option>
+				{% for image in product.images %}
+					{% assign image_src = image.src | remove:'products/' | remove:'.png' %}
+					{% if image_src contains opt2 %}
+						{% capture remove2 %}{{ opt2 }}_{% endcapture %}
+						<option value="{{ image_src }}">{{ image_src | remove:remove2 | replace:'_',' ' | remove:'1' | remove:'2' | remove:'3' | remove:'4' | remove:'5' | remove:'6' | remove:'7' | remove:'8' | remove:'9' | remove:'0' }}</option>
+					{% endif %}
+				{% endfor %}
+			</select>
+		</div>
+	{% endif %}
+{% endif %}
+
+<!-- Three -->			
+{% if opt3p != '' %}
+<input type="hidden" name="option_three" id="option_three" value="" />
+<input type="hidden" name="option_three_b" id="option_three_b" value="" />
+	<div class="optionDropdown">
+		{{ opt3 | replace:'-',' ' }} {{ opt3p }}:
+		<select name="opt3p" onchange="show('three',this.value),parentPick('child3',this.value,'hidden3');">
+			<option value="" disabled="disabled" selected="selected">Select {{ opt3 }} {{ opt3p }}</option>
+			{% for image in product.images %}
+				{% assign image_src = image.src | remove:'products/' | remove:'.png' %}
+				{% if image_src contains opt3 %}
+					{% assign parent3 = image_src | split:'-' %}
+					{% assign parent3 = parent3[1] | remove: opt3 | remove: opt3p | remove_first: '_' | remove_last:'_' %}
+					{% assign parent_clean3 = parent3 | replace: '_',' ' %}
+					{% unless alreadyUsed3 contains parent3 %}
+						{% assign parentCount3 = parentCount3 | plus: 1 %}
+						<option value="{{ parentCount3 }}*{{ image_src }}">{{ parent_clean3 }}</option>
+						{% capture alreadyUsed3 %}{{ alreadyUsed3 }}{{ parent3 }}{% endcapture %}
+						{% capture parent_array3 %}{{ parent_array3 }}*parent3{{ parentCount3 }}_{{ parent3 }}{% endcapture %}
+					{% endunless %}
+				{% endif %}
+			{% endfor %}
+		</select>
+		<input type="hidden" value="{{ parentCount3 | plus: 1 }}" id="hidden3" />
+	</div>
+	{% for i in (1..parentCount3) %}
+		{% assign parent3 = parent_array3 | split: "*" %}
+		{% assign parent3 = parent3[i] | split: "_" %}
+		{% assign parent3 = parent3[1] %}
+		<div id="child3{{ i }}" class="optionDropdown{% if i > 1 %} hide{% endif %}">
+			{{ opt3 | replace:'-',' ' }} {{ opt3c }}:
+			<select name="properties[Option 3]" id="option3a" onchange="show('three',this.value), establish_validate_value('three',this.value);">
+				<option value="" disabled="disabled" selected="selected">Select {{ opt3 }} {{ opt3c }}</option>
+				{% for image in product.images %}
+					{% assign image_src = image.src | remove:'products/' | remove:'.png' %}
+					{% if image_src contains opt3 and image_src contains parent3 and image_src contains opt3c  %}
+						{% assign child3 = image_src | split: opt3c %}
+						{% assign child3 = child3[1] | remove_first:'_' | replace:'_',' ' %}
+						<option value="{{ image_src }}">{{ child3 | remove:'1' | remove:'2' | remove:'3' | remove:'4' | remove:'5' | remove:'6' | remove:'7' | remove:'8' | remove:'9' | remove:'0' }}</option>
+					{% endif %}
+				{% endfor %}
+			</select>
+		</div>
+	{% endfor %}
+{% else %}
+	{% if opt3 != '' %}
+	<input type="hidden" name="option_three" id="option_three" value="" />
+		<div class="optionDropdown">
+			{{ opt3 | replace:'-',' ' }}:
+			<select name="properties[Option 3]" id="option3b" onchange="show('three',this.value);">
+				<option value="" disabled="disabled" selected="selected">Select {{ opt3 | replace:'-',' ' }}</option>
+				{% for image in product.images %}
+					{% assign image_src = image.src | remove:'products/' | remove:'.png' %}
+					{% if image_src contains opt3 %}
+						{% capture remove3 %}{{ opt3 }}_{% endcapture %}
+						<option value="{{ image_src }}">{{ image_src | remove:remove3 | replace:'_',' ' | remove:'1' | remove:'2' | remove:'3' | remove:'4' | remove:'5' | remove:'6' | remove:'7' | remove:'8' | remove:'9' | remove:'0' }}</option>
+					{% endif %}
+				{% endfor %}
+			</select>
+		</div>
+	{% endif %}
+{% endif %}		
+
+<!-- Four -->			
+{% if opt4p != '' %}
+<input type="hidden" name="option_four" id="option_four" value="" />
+<input type="hidden" name="option_four_b" id="option_four_b" value="" />
+	<div class="optionDropdown">
+		{{ opt4 }} {{ opt4p }}: 
+		<select name="opt4p" onchange="show('four',this.value),parentPick('child4',this.value,'hidden4');">
+			<option value="" disabled="disabled" selected="selected">Select {{ opt4 }} {{ opt4p }}</option>
+			{% for image in product.images %}
+				{% assign image_src = image.src | remove:'products/' | remove:'.png' %}
+				{% if image_src contains opt4 %}
+					{% assign parent4 = image_src | split:'-' %}
+					{% assign parent4 = parent4[1] | remove: opt4 | remove: opt4p | remove_first: '_' | remove_last:'_' %}
+					{% assign parent_clean4 = parent4 | replace: '_',' ' %}
+					{% unless alreadyUsed4 contains parent4 %}
+						{% assign parentCount4 = parentCount4 | plus: 1 %}
+						<option value="{{ parentCount4 }}*{{ image_src }}">{{ parent_clean4 }}</option>
+						{% capture alreadyUsed4 %}{{ alreadyUsed4 }}{{ parent4 }}{% endcapture %}
+						{% capture parent_array4 %}{{ parent_array4 }}*parent4{{ parentCount4 }}_{{ parent4 }}{% endcapture %}
+					{% endunless %}
+				{% endif %}
+			{% endfor %}
+		</select>
+		<input type="hidden" value="{{ parentCount4 | plus: 1 }}" id="hidden4" />
+	</div>
+	{% for i in (1..parentCount4) %}
+		{% assign parent4 = parent_array4 | split: "*" %}
+		{% assign parent4 = parent4[i] | split: "_" %}
+		{% assign parent4 = parent4[1] %}
+		<div id="child4{{ i }}" class="optionDropdown{% if i > 1 %} hide{% endif %}">
+			{{ opt4 }} {{ opt4c }}:
+			<select name="properties[Option 4]" id="option4a" onchange="show('four',this.value), establish_validate_value('four',this.value);">
+				<option value="" disabled="disabled" selected="selected">Select {{ opt4 }} {{ opt4c }}</option>
+				{% for image in product.images %}
+					{% assign image_src = image.src | remove:'products/' | remove:'.png' %}
+					{% if image_src contains opt4 and image_src contains parent4 and image_src contains opt4c  %}
+						{% assign child4 = image_src | split: opt4c %}
+						{% assign child4 = child4[1] | remove_first:'_' | replace:'_',' ' %}
+						<option value="{{ image_src }}">{{ child4 | remove:'1' | remove:'2' | remove:'3' | remove:'4' | remove:'5' | remove:'6' | remove:'7' | remove:'8' | remove:'9' | remove:'0' }}</option>
+					{% endif %}
+				{% endfor %}
+			</select>
+		</div>
+	{% endfor %}
+{% else %}
+	{% if opt4 != '' %}
+	<input type="hidden" name="option_four" id="option_four" value="" />
+		<div class="optionDropdown">
+			{{ opt4 }}: 
+			<select name="properties[Option 4]" id="option4b" onchange="show('four',this.value);">
+				<option value="" disabled="disabled" selected="selected">Select {{ opt4 | replace:'-',' ' }}</option>
+				{% for image in product.images %}
+					{% assign image_src = image.src | remove:'products/' | remove:'.png' %}
+					{% if image_src contains opt4 %}
+						{% capture remove4 %}{{ opt4 }}_{% endcapture %}
+						<option value="{{ image_src }}">{{ image_src | remove:remove4 | replace:'_',' ' | remove:'1' | remove:'2' | remove:'3' | remove:'4' | remove:'5' | remove:'6' | remove:'7' | remove:'8' | remove:'9' | remove:'0' }}</option>
+					{% endif %}
+				{% endfor %}
+			</select>
+		</div>
+	{% endif %}
+{% endif %}
+
+<!-- Five -->
+{% if opt5p != '' %}
+<input type="hidden" name="option_five" id="option_five" value="" />
+<input type="hidden" name="option_five_b" id="option_five_b" value="" />
+	<div class="optionDropdown">
+		{{ opt5 | replace:'-',' ' }} {{ opt5p }}:
+		<select name="opt5p" onchange="show('five',this.value),parentPick('child5',this.value,'hidden5');">
+			<option value="" disabled="disabled" selected="selected">Select {{ opt5 }} {{ opt5p }}</option>
+			{% for image in product.images %}
+				{% assign image_src = image.src | remove:'products/' | remove:'.png' %}
+				{% if image_src contains opt5 %}
+					{% assign parent5 = image_src | split:'-' %}
+					{% assign parent5 = parent5[1] | remove: opt5 | remove: opt5p | remove_first: '_' | remove_last:'_' %}
+					{% assign parent_clean5 = parent5 | replace: '_',' ' %}
+					{% unless alreadyUsed5 contains parent5 %}
+						{% assign parentCount5 = parentCount5 | plus: 1 %}
+						<option value="{{ parentCount5 }}*{{ image_src }}">{{ parent_clean5 }}</option>
+						{% capture alreadyUsed5 %}{{ alreadyUsed5 }}{{ parent5 }}{% endcapture %}
+						{% capture parent_array5 %}{{ parent_array5 }}*parent5{{ parentCount5 }}_{{ parent5 }}{% endcapture %}
+					{% endunless %}
+				{% endif %}
+			{% endfor %}
+		</select>
+		<input type="hidden" value="{{ parentCount5 | plus: 1 }}" id="hidden5" />
+	</div>
+	{% for i in (1..parentCount5) %}
+		{% assign parent5 = parent_array5 | split: "*" %}
+		{% assign parent5 = parent5[i] | split: "_" %}
+		{% assign parent5 = parent5[1] %}
+		<div id="child5{{ i }}" class="optionDropdown{% if i > 1 %} hide{% endif %}">
+			{{ opt5 | replace:'-',' ' }} {{ opt5c }}:
+			<select name="properties[Option 5]" id="option5a" onchange="show('five',this.value), establish_validate_value('five',this.value);">
+				<option value="" disabled="disabled" selected="selected">Select {{ opt5 }} {{ opt5c }}</option>
+				{% for image in product.images %}
+					{% assign image_src = image.src | remove:'products/' | remove:'.png' %}
+					{% if image_src contains opt5 and image_src contains parent5 and image_src contains opt5c  %}
+						{% assign child5 = image_src | split: opt5c %}
+						{% assign child5 = child5[1] | remove_first:'_' | replace:'_',' ' %}
+						<option value="{{ image_src }}">{{ child5 | remove:'1' | remove:'2' | remove:'3' | remove:'4' | remove:'5' | remove:'6' | remove:'7' | remove:'8' | remove:'9' | remove:'0' }}</option>
+					{% endif %}
+				{% endfor %}
+			</select>
+		</div>
+	{% endfor %}
+{% else %}
+	{% if opt5 != '' %}
+	<input type="hidden" name="option_five" id="option_five" value="" />
+		<div class="optionDropdown">
+			{{ opt5 | replace:'-',' ' }}:
+			<select name="properties[Option 5]" id="option5b" onchange="show('five',this.value);">
+				<option value="" disabled="disabled" selected="selected">Select {{ opt5 | replace:'-',' ' }}</option>
+				{% for image in product.images %}
+					{% assign image_src = image.src | remove:'products/' | remove:'.png' %}
+					{% if image_src contains opt5 %}
+						{% capture remove5 %}{{ opt5 }}_{% endcapture %}
+						<option value="{{ image_src }}">{{ image_src | remove:remove5 | replace:'_',' ' | remove:'1' | remove:'2' | remove:'3' | remove:'4' | remove:'5' | remove:'6' | remove:'7' | remove:'8' | remove:'9' | remove:'0' }}</option>
+					{% endif %}
+				{% endfor %}
+			</select>
+		</div>
+	{% endif %}
+{% endif %}
+
+<!-- Six -->
+{% if opt6p != '' %}
+<input type="hidden" name="option_six" id="option_six" value="" />
+<input type="hidden" name="option_six_b" id="option_six_b" value="" />
+	<div class="optionDropdown">
+		{{ opt6 | replace:'-',' ' }} {{ opt6p }}:
+		<select name="opt6p" onchange="show('six',this.value),parentPick('child6',this.value,'hidden6');">
+			<option value="" disabled="disabled" selected="selected">Select {{ opt6 }} {{ opt6p }}</option>
+			{% for image in product.images %}
+				{% assign image_src = image.src | remove:'products/' | remove:'.png' %}
+				{% if image_src contains opt6 %}
+					{% assign parent6 = image_src | split:'-' %}
+					{% assign parent6 = parent6[1] | remove: opt6 | remove: opt6p | remove_first: '_' | remove_last:'_' %}
+					{% assign parent_clean6 = parent6 | replace: '_',' ' %}
+					{% unless alreadyUsed6 contains parent6 %}
+						{% assign parentCount6 = parentCount6 | plus: 1 %}
+						<option value="{{ parentCount6 }}*{{ image_src }}">{{ parent_clean6 }}</option>
+						{% capture alreadyUsed6 %}{{ alreadyUsed6 }}{{ parent6 }}{% endcapture %}
+						{% capture parent_array6 %}{{ parent_array6 }}*parent6{{ parentCount6 }}_{{ parent6 }}{% endcapture %}
+					{% endunless %}
+				{% endif %}
+			{% endfor %}
+		</select>
+		<input type="hidden" value="{{ parentCount6 | plus: 1 }}" id="hidden6" />
+	</div>
+	{% for i in (1..parentCount6) %}
+		{% assign parent6 = parent_array6 | split: "*" %}
+		{% assign parent6 = parent6[i] | split: "_" %}
+		{% assign parent6 = parent6[1] %}
+		<div id="child6{{ i }}" class="optionDropdown{% if i > 1 %} hide{% endif %}">
+			{{ opt6 | replace:'-',' ' }} {{ opt6c }}:
+			<select name="properties[Option 6]" id="option6a" onchange="show('six',this.value), establish_validate_value('six',this.value);">
+				<option value="" disabled="disabled" selected="selected">Select {{ opt6 }} {{ opt6c }}</option>
+				{% for image in product.images %}
+					{% assign image_src = image.src | remove:'products/' | remove:'.png' %}
+					{% if image_src contains opt6 and image_src contains parent6 and image_src contains opt6c  %}
+						{% assign child6 = image_src | split: opt6c %}
+						{% assign child6 = child6[1] | remove_first:'_' | replace:'_',' ' %}
+						<option value="{{ image_src }}">{{ child6 | remove:'1' | remove:'2' | remove:'3' | remove:'4' | remove:'5' | remove:'6' | remove:'7' | remove:'8' | remove:'9' | remove:'0' }}</option>
+					{% endif %}
+				{% endfor %}
+			</select>
+		</div>
+	{% endfor %}
+{% else %}
+	{% if opt6 != '' %}
+	<input type="hidden" name="option_six" id="option_six" value="" />
+		<div class="optionDropdown">
+			{{ opt6 | replace:'-',' ' }}:
+			<select name="properties[Option 6]" id="option6b" onchange="show('six',this.value);">
+				<option value="" disabled="disabled" selected="selected">Select {{ opt6 | replace:'-',' ' | remove:'1' | remove:'2' | remove:'3' | remove:'4' | remove:'5' | remove:'6' | remove:'7' | remove:'8' | remove:'9' | remove:'0' }}</option>
+				{% for image in product.images %}
+					{% assign image_src = image.src | remove:'products/' | remove:'.png' %}
+					{% if image_src contains opt6 %}
+						{% capture remove6 %}{{ opt6 }}_{% endcapture %}
+						<option value="{{ image_src }}">{{ image_src | remove:remove6 | replace:'_',' ' | remove:'1' | remove:'2' | remove:'3' | remove:'4' | remove:'5' | remove:'6' | remove:'7' | remove:'8' | remove:'9' | remove:'0' }}</option>
+					{% endif %}
+				{% endfor %}
+			</select>
+		</div>
+	{% endif %}
+{% endif %}

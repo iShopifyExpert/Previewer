@@ -1,0 +1,36 @@
+<script type="text/javascript">
+	function show(div,img) {
+		document.getElementById("placeholder").style.display = "none";
+		document.getElementById(div).style.backgroundImage = "none";
+		var asterisk_test = img.indexOf("*");
+		if(asterisk_test > -1) {
+			var value = img.split("*");
+			var value = value[1];
+		} else {
+			var value = img;
+		}
+		{% for image in product.images %}
+			var string = "{{ image.src }}";
+			var search = string.indexOf(value);
+			if(search > -1) {
+				document.getElementById(div).style.backgroundImage = "url({{ image.src | product_img_url: 'original' }})";
+			}
+		{% endfor %}
+		if(document.getElementById("option_"+div)) {document.getElementById("option_"+div).value = img;}
+	}
+	function establish_validate_value(div,img) {
+		if(document.getElementById("option_"+div+"_b")) {document.getElementById("option_"+div+"_b").value = img;}
+	}
+	function parentPick(child,value,loop_total) {
+		var n=value.split("*");
+		var string = n[0];
+		var count = document.getElementById(loop_total).value;
+		var child = child;
+		for (var i = 1; i < count; i++) {
+			var hide = child+i;
+			document.getElementById(hide).style.display = "none";
+		}
+		var show = child + string;
+		document.getElementById(show).style.display = "block";
+	}
+</script>
