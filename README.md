@@ -3,12 +3,12 @@ Previewer
 
 For customizable products in Shopify
 
-Ingredients: 1) javascript.liquid, 2) initial-assignments.liquid, 3) display-box.liquid, 4) dropdowns.liquid
+Ingredients: 1) javascript.liquid, 2) initial-assignments.liquid, 3) display-box.liquid, 4) dropdowns.liquid, 5) cart.liquid
 
 The options dropdowns are taken from the product image names. So make sure to name your images: optionLabel_optionName. The label should be consistent
 between all your options in a dropdown. For example, your background images should be named: background_blue.png, background_green.png, and so on.
 
-The javascript is what changes the images in the display boxes. The initial assignments grab and parse the image titles from the product images. The display boxes are just that. And the dropdowns is the real meat -- if you can simplify that code, please let me know.
+The javascript is what changes the images in the display boxes. The initial assignments grab and parse the image titles from the product images. The display boxes are just that. And the dropdowns is the real meat -- if you can simplify that code, please let me know. There's also the line-items code in the cart. You'll want to shrink those images down with a little css, but this will give your customers a visual confirmation in the cart in addition to the text confirmation from the image titles.
 
 A major key is your css. Your images should all be the same dimensions. You should also make your display box that same dimension. It also needs a position value of absolute and, subsequently, a bottom margin equal to its height. 
 

@@ -1,0 +1,58 @@
+<div id="cart">
+	<h2>Your Cart</h2>
+	{% if cart.item_count == 0 %}
+		You have nothing in your cart.
+	{% else %}
+		<form action="/cart" method="post" id="cartform">
+			<table>
+			    <tr>
+					<th>Item</th>
+					<th></th>
+					<th>Price</th>
+					<th>Quantity</th>
+					<th>Remove</th>
+					<th>Total</th>
+			    </tr>
+				{% for item in cart.items %}
+					<tr class="{% cycle 'odd', 'even' %}">
+						<td>
+							<a href="{{ item.product.url }}">
+								{% assign previewerCheck = "false" %}
+								{% for p in item.properties %}{% if p.first == "Option 1" %}{% assign previewerCheck = "true" %}{% endif %}{% endfor %}
+								{% if previewerCheck == "true" %}
+									<span class="previewImage">
+										{% for p in item.properties %}
+											{% for image in item.product.images %}
+												{% if image.src contains p.last and p.last.size > 1 %}
+													<img src="{{ image | product_img_url: 'small' }}" alt="{{ p.last }}" />
+												{% endif %}
+											{% endfor %}
+										{% endfor %}
+									</span>
+								{% else %}
+									{{ item.product.images.first | product_img_url: 'small' | img_tag: item.title }}
+								{% endif %}
+							</a>
+						</td>
+						<td>
+							<a href="{{ item.product.url }}">{{ item.title }}</a>
+							<br /><br />
+							{% for p in item.properties %}
+								{% unless p.last == blank %}
+									{{ p.first }}:
+									{{ p.last }}<br />
+								{% endunless %}
+							{% endfor %}
+						</td>
+						<td>{{ item.price | money }}</td>
+						<td><input type="text" size="4" name="updates[{{item.variant.id}}]" id="updates_{{ item.variant.id }}" value="{{ item.quantity }}" /></td>
+						<td class="remove"><a href="/cart/change?line={{ forloop.index }}&quantity=0" title="remove">remove</a></td>
+						<td>{{ item.line_price | money }}</td>
+					</tr>
+				{% endfor %}
+			</table>
+		</form>
+	{% endif %}
+</div><!-- end #cart -->
+
+
